@@ -1,0 +1,19 @@
+FROM vertx/vertx3
+
+ENV VERTICLE_NAME io.vertx.Server
+ENV VERTICLE_FILE build/libs/vertx-1.0-SNAPSHOT-fat.jar
+ENV VERTICLE_HOME /usr/verticles
+
+ENV MONGO_URI mongodb://mongodb:27017
+ENV DB user
+ENV PORT 8081
+
+EXPOSE $PORT
+
+COPY $VERTICLE_FILE $VERTICLE_HOME/
+
+WORKDIR $VERTICLE_HOME
+
+ENTRYPOINT ["sh", "-c"]
+
+CMD ["vertx run $VERTICLE_NAME -cp $VERTICLE_HOME/*"]
